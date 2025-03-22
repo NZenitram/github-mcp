@@ -96,8 +96,20 @@ def create_repo(
     Returns:
         Created repository object
     """
-    # Implementation will be added later
-    pass
+    github = get_github_client()
+    user = github.get_user()
+    
+    # Create the repository
+    repo = user.create_repo(
+        name=name,
+        description=description,
+        private=private,
+        auto_init=auto_init,
+        gitignore_template=gitignore_template,
+        license_template=license_template
+    )
+    
+    return repo
 
 def update_repo_settings(
     owner: str,
@@ -110,10 +122,45 @@ def update_repo_settings(
     Args:
         owner: Repository owner
         repo: Repository name
-        settings: Dictionary of settings to update
+        settings: Dictionary of settings to update. Can include:
+            - description: Repository description
+            - private: Whether the repository is private
+            - has_issues: Whether issues are enabled
+            - has_projects: Whether projects are enabled
+            - has_wiki: Whether wiki is enabled
+            - has_downloads: Whether downloads are enabled
+            - has_pages: Whether pages are enabled
+            - has_discussions: Whether discussions are enabled
+            - allow_squash_merge: Whether squash merging is allowed
+            - allow_merge_commit: Whether merge commits are allowed
+            - allow_rebase_merge: Whether rebase merging is allowed
+            - delete_branch_on_merge: Whether to delete branches after merging
+            - archived: Whether the repository is archived
+            - topics: List of repository topics
     """
-    # Implementation will be added later
-    pass
+    github = get_github_client()
+    repository = github.get_repo(f"{owner}/{repo}")
+    
+    # Update repository settings
+    repository.edit(**settings)
+
+def delete_repo(owner: str, repo: str) -> None:
+    """
+    Delete a GitHub repository.
+    
+    Args:
+        owner: Repository owner
+        repo: Repository name
+        
+    Note:
+        This action cannot be undone. All repository data, including issues,
+        pull requests, and wiki pages will be permanently deleted.
+    """
+    github = get_github_client()
+    repository = github.get_repo(f"{owner}/{repo}")
+    
+    # Delete the repository
+    repository.delete()
 
 def manage_collaborators(
     owner: str,
