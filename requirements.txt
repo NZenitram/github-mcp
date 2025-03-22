@@ -1,0 +1,6 @@
+mcp==1.4.1
+fastmcp==0.4.1
+PyGithub==2.1.1
+python-dotenv==1.0.1
+pytest==7.4.0
+pytest-cov==4.1.0 
