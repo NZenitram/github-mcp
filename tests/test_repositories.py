@@ -5,7 +5,7 @@ import os
 import pytest
 from datetime import datetime
 from unittest.mock import MagicMock, patch
-from src.tools.repositories import create_repo, update_repo_settings, get_github_client, delete_repo
+from src.tools.repositories import create_repo, update_repo_settings, get_github_client
 
 @pytest.fixture(autouse=True)
 def setup_env():
@@ -186,17 +186,6 @@ def test_update_repo_settings_empty(mock_github, mock_repo):
     
     # Verify GitHub API was called correctly
     mock_repo.edit.assert_called_once_with(**settings)
-
-def test_delete_repo(mock_github, mock_repo):
-    """Test deleting a repository."""
-    # Delete the repository
-    delete_repo(
-        owner="test_user",
-        repo="test-repo"
-    )
-    
-    # Verify GitHub API was called correctly
-    mock_repo.delete.assert_called_once()
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"]) 

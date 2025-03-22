@@ -144,24 +144,6 @@ def update_repo_settings(
     # Update repository settings
     repository.edit(**settings)
 
-def delete_repo(owner: str, repo: str) -> None:
-    """
-    Delete a GitHub repository.
-    
-    Args:
-        owner: Repository owner
-        repo: Repository name
-        
-    Note:
-        This action cannot be undone. All repository data, including issues,
-        pull requests, and wiki pages will be permanently deleted.
-    """
-    github = get_github_client()
-    repository = github.get_repo(f"{owner}/{repo}")
-    
-    # Delete the repository
-    repository.delete()
-
 def manage_collaborators(
     owner: str,
     repo: str,
